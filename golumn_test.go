@@ -34,3 +34,30 @@ func (s *MySuite) TestVariableColumnSizeMultiLine(c *C) {
 
 	c.Check(golumn.Parse(input, ","), Equals, "aaa\tb \tcc\na  \tbb\tc ")
 }
+
+func (s *MySuite) TestParseFCanTakeCustomColumnSpacer(c *C) {
+	input := "aaa,b,cc\na,bb,c"
+	options := map[string]string{
+		"columnSpacer": "**",
+	}
+
+	c.Check(golumn.ParseF(input, ",", options), Equals, "aaa**b **cc\na  **bb**c ")
+}
+
+func (s *MySuite) TestParseFCanTakeCustomNewLineCharacter(c *C) {
+	input := "aaa,b,cc\ra,bb,c"
+	options := map[string]string{
+		"newLine": "\r",
+	}
+
+	c.Check(golumn.ParseF(input, ",", options), Equals, "aaa\tb \tcc\ra  \tbb\tc ")
+}
+
+// func (s *MySuite) TestParseFCanFormatForCustomColumnWidthSingleLine(c *C) {
+// 	input := "aaa,bbb,ccc"
+// 	options := map[string]string{
+// 		"columnWidth": "2",
+// 	}
+
+// 	c.Check(golumn.ParseF(input, ",", options), Equals, "aa\tbb\tcc\na \tb \tc ")
+// }

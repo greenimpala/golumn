@@ -6,27 +6,45 @@ import (
 )
 
 const (
-	columnSpacer = "\t"
-	newLine      = "\n"
-	space        = " "
+	space = " "
 )
 
-func Parse(input string, delim string) (output string) {
+var defaultOptions = map[string]string{
+	"columnSpacer": "\t",
+	"newLine":      "\n",
+}
+
+func Parse(input string, delim string) string {
+	return parse(input, delim, defaultOptions)
+}
+
+func ParseF(input string, delim string, options map[string]string) string {
+	// Mix-in defaults for non-existant keys
+	for key, value := range defaultOptions {
+		if options[key] == "" {
+			options[key] = value
+		}
+	}
+
+	return parse(input, delim, options)
+}
+
+func parse(input string, delim string, options map[string]string) (output string) {
 	if delim == "" {
 		return input
 	}
 
-	lines := lines(input)
+	lines := lines(input, options["newLine"])
 	padSizes := determinePadSizes(lines, delim)
 
 	for i, line := range lines {
 		line = padChunks(line, delim, padSizes)
-		line = replaceDelimiter(line, delim)
+		line = replaceDelimiter(line, delim, options["columnSpacer"])
 
 		output += line
 
 		if i < len(lines)-1 {
-			output += newLine
+			output += options["newLine"]
 		}
 	}
 	return
@@ -68,11 +86,11 @@ func padChunks(line string, delim string, padSize map[int]int) (output string) {
 	return
 }
 
-func replaceDelimiter(line string, delim string) string {
+func replaceDelimiter(line string, delim string, columnSpacer string) string {
 	return regexp.MustCompile(delim).ReplaceAllString(line, columnSpacer)
 }
 
-func lines(input string) []string {
+func lines(input string, newLine string) []string {
 	return regexp.MustCompile(newLine).Split(input, -1)
 }
 
