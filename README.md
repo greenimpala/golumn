@@ -20,3 +20,4 @@ Where options is a combination of the following:
 
 * `columnSpacer` - The characters used to pad columns, default is `\t`.
 * `newLine` - New line character, default is `\n`.
+* `columnWidth` - Sets colums to be a fixed width.

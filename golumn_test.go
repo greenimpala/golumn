@@ -52,3 +52,21 @@ func (s *MySuite) TestParseFCanTakeCustomNewLineCharacter(c *C) {
 
 	c.Check(golumn.ParseF(input, ",", options), Equals, "aaa\tb \tcc\ra  \tbb\tc ")
 }
+
+func (s *MySuite) TestParseFCanFormatForCustomColumnWidthSingleLine(c *C) {
+	input := "aaa,bbb,ccc"
+	options := map[string]string{
+		"columnWidth": "2",
+	}
+
+	c.Check(golumn.ParseF(input, ",", options), Equals, "aa\tbb\tcc\na \tb \tc ")
+}
+
+func (s *MySuite) TestParseFCanFormatForCustomColumnWidthMulti(c *C) {
+	input := "aaa,bbb,ccc\nzz,xxxx,yy"
+	options := map[string]string{
+		"columnWidth": "2",
+	}
+
+	c.Check(golumn.ParseF(input, ",", options), Equals, "aa\tbb\tcc\na \tb \tc \nzz\txx\tyy\n  \txx\t  ")
+}
