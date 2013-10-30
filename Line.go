@@ -15,16 +15,16 @@ func NewLine(line string, delim string) *Line {
 	}
 }
 
-func (l *Line) Join(padSizes map[int]int, delim string) string {
-	return l.joinWithColumnConstraints(delim, padSizes)
-}
-
-func (l *Line) joinWithColumnConstraints(delim string, padSizes map[int]int) (output string) {
+func (l *Line) Join(padSizes map[int]int, delim string, truncate bool) (output string) {
 	var lines float64 // Number of lines we are going to fill
 
-	// Calculate the max lines
-	for i, chunk := range l.chunks {
-		lines = math.Max(lines, math.Ceil(float64(len(chunk))/float64(padSizes[i])))
+	if truncate {
+		lines = 1
+	} else {
+		// Calculate the max lines from the pad sizes
+		for i, chunk := range l.chunks {
+			lines = math.Max(lines, math.Ceil(float64(len(chunk))/float64(padSizes[i])))
+		}
 	}
 
 	chunksBuffer := l.chunks
@@ -36,6 +36,10 @@ func (l *Line) joinWithColumnConstraints(delim string, padSizes map[int]int) (ou
 			// Pad chunk
 			for len(chunk) < padSizes[columnIndex] {
 				chunk += " "
+			}
+
+			if truncate {
+				chunk = chunk[:padSizes[columnIndex]]
 			}
 
 			output += chunk[:padSizes[columnIndex]]

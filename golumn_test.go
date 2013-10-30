@@ -79,3 +79,13 @@ func (s *MySuite) TestParseFCanFormatForMaxWidth(c *C) {
 
 	c.Check(golumn.ParseF(input, ",", options), Equals, "aa\tbb\tcc\n  \tbb\tcc")
 }
+
+func (s *MySuite) TestParseFCanTruncate(c *C) {
+	input := "aa,bbbb,cccc"
+	options := golumn.Options{
+		ColumnWidth: 2,
+		Truncate:    true,
+	}
+
+	c.Check(golumn.ParseF(input, ",", options), Equals, "aa\tbb\tcc")
+}

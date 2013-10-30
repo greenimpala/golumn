@@ -11,6 +11,7 @@ type Options struct {
 	ColumnSpacer   string
 	NewLine        string
 	Delim          string
+	Truncate       bool
 }
 
 type Parser struct {
@@ -32,7 +33,7 @@ func NewParser(input string, options *Options) *Parser {
 
 func (p *Parser) Parse(output *string) {
 	for i, line := range p.lines {
-		*output += line.Join(p.padSizes, p.options.ColumnSpacer)
+		*output += line.Join(p.padSizes, p.options.ColumnSpacer, p.options.Truncate)
 
 		if i < len(p.lines)-1 {
 			*output += p.options.NewLine

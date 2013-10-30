@@ -32,3 +32,4 @@ For use with `ParseF` - where `options` is a `golumn.Options` struct containing 
 * `NewLine string` - New line character, default is `\n`.
 * `ColumnWidth int` - Sets colums to be a fixed width.
 * `MaxColumnWidth int` - Constrains column widths. Overidden if a valid `ColumnWidth` option is given.
+* `Truncate bool` - Truncates any cells that overflow the `ColumnWidth` or `MaxColumnWidth`.
