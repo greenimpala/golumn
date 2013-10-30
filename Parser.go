@@ -3,18 +3,25 @@ package golumn
 import (
 	"math"
 	"regexp"
-	"strconv"
 )
+
+type Options struct {
+	ColumnWidth    int
+	MaxColumnWidth int
+	ColumnSpacer   string
+	NewLine        string
+	Delim          string
+}
 
 type Parser struct {
 	lines    []*Line
 	padSizes map[int]int
-	options  map[string]string
+	options  *Options
 }
 
-func NewParser(input string, options map[string]string) *Parser {
+func NewParser(input string, options *Options) *Parser {
 	lines := makeLines(input, options)
-	padSizes := makePadSizes(lines)
+	padSizes := makePadSizes(lines, options)
 
 	return &Parser{
 		lines:    lines,
@@ -24,29 +31,27 @@ func NewParser(input string, options map[string]string) *Parser {
 }
 
 func (p *Parser) Parse(output *string) {
-	columnWidth, _ := strconv.Atoi(p.options["columnWidth"])
-
 	for i, line := range p.lines {
-		*output += line.Join(p.padSizes, p.options["columnSpacer"], columnWidth)
+		*output += line.Join(p.padSizes, p.options.ColumnSpacer, p.options.ColumnWidth)
 
 		if i < len(p.lines)-1 {
-			*output += p.options["newLine"]
+			*output += p.options.NewLine
 		}
 	}
 }
 
-func makeLines(input string, options map[string]string) []*Line {
-	lines := regexp.MustCompile(options["newLine"]).Split(input, -1)
+func makeLines(input string, options *Options) []*Line {
+	lines := regexp.MustCompile(options.NewLine).Split(input, -1)
 	slice := make([]*Line, len(lines))
 
 	for i, line := range lines {
-		slice[i] = NewLine(line, options["delim"])
+		slice[i] = NewLine(line, options.Delim)
 	}
 
 	return slice
 }
 
-func makePadSizes(lines []*Line) map[int]int {
+func makePadSizes(lines []*Line, options *Options) map[int]int {
 	// A map of column-index / pad-size pairs
 	padSizes := make(map[int]int)
 

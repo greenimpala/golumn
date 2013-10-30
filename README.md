@@ -13,11 +13,11 @@ func Parse(input string, delim string) string
 Use `ParseF` to override default options.
 
 ```go
-func ParseF(input string, delim string, options map[string]string) string
+func ParseF(input string, delim string, options Options) string
 ```
 
-Where options is a combination of the following:
+Where options is a `golumn.Options` struct containing
 
-* `columnSpacer` - The characters used to pad columns, default is `\t`.
-* `newLine` - New line character, default is `\n`.
-* `columnWidth` - Sets colums to be a fixed width.
+* `ColumnSpacer` - The characters used to pad columns, default is `\t`.
+* `NewLine` - New line character, default is `\n`.
+* `ColumnWidth` - Sets colums to be a fixed width.

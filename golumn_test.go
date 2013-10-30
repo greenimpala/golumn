@@ -37,8 +37,8 @@ func (s *MySuite) TestVariableColumnSizeMultiLine(c *C) {
 
 func (s *MySuite) TestParseFCanTakeCustomColumnSpacer(c *C) {
 	input := "aaa,b,cc\na,bb,c"
-	options := map[string]string{
-		"columnSpacer": "**",
+	options := golumn.Options{
+		ColumnSpacer: "**",
 	}
 
 	c.Check(golumn.ParseF(input, ",", options), Equals, "aaa**b **cc\na  **bb**c ")
@@ -46,8 +46,8 @@ func (s *MySuite) TestParseFCanTakeCustomColumnSpacer(c *C) {
 
 func (s *MySuite) TestParseFCanTakeCustomNewLineCharacter(c *C) {
 	input := "aaa,b,cc\ra,bb,c"
-	options := map[string]string{
-		"newLine": "\r",
+	options := golumn.Options{
+		NewLine: "\r",
 	}
 
 	c.Check(golumn.ParseF(input, ",", options), Equals, "aaa\tb \tcc\ra  \tbb\tc ")
@@ -55,8 +55,8 @@ func (s *MySuite) TestParseFCanTakeCustomNewLineCharacter(c *C) {
 
 func (s *MySuite) TestParseFCanFormatForCustomColumnWidthSingleLine(c *C) {
 	input := "aaa,bbb,ccc"
-	options := map[string]string{
-		"columnWidth": "2",
+	options := golumn.Options{
+		ColumnWidth: 2,
 	}
 
 	c.Check(golumn.ParseF(input, ",", options), Equals, "aa\tbb\tcc\na \tb \tc ")
@@ -64,8 +64,8 @@ func (s *MySuite) TestParseFCanFormatForCustomColumnWidthSingleLine(c *C) {
 
 func (s *MySuite) TestParseFCanFormatForCustomColumnWidthMulti(c *C) {
 	input := "aaa,bbb,ccc\nzz,xxxx,yy"
-	options := map[string]string{
-		"columnWidth": "2",
+	options := golumn.Options{
+		ColumnWidth: 2,
 	}
 
 	c.Check(golumn.ParseF(input, ",", options), Equals, "aa\tbb\tcc\na \tb \tc \nzz\txx\tyy\n  \txx\t  ")

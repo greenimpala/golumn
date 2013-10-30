@@ -1,32 +1,35 @@
 package golumn
 
-var defaultOptions = map[string]string{
-	"columnSpacer": "\t",
-	"newLine":      "\n",
+var defaultOptions = Options{
+	ColumnSpacer: "\t",
+	NewLine:      "\n",
+	Delim:        ",",
 }
 
 func Parse(input string, delim string) string {
-	return parse(input, delim, defaultOptions)
+	options := defaultOptions
+	options.Delim = delim
+	return parse(input, options)
 }
 
-func ParseF(input string, delim string, options map[string]string) string {
-	// Mix-in defaults for non-existant keys
-	for key, value := range defaultOptions {
-		if options[key] == "" {
-			options[key] = value
-		}
+func ParseF(input string, delim string, options Options) string {
+	if options.ColumnSpacer == "" {
+		options.ColumnSpacer = defaultOptions.ColumnSpacer
 	}
+	if options.NewLine == "" {
+		options.NewLine = defaultOptions.NewLine
+	}
+	options.Delim = delim
 
-	return parse(input, delim, options)
+	return parse(input, options)
 }
 
-func parse(input string, delim string, options map[string]string) (output string) {
-	if delim == "" {
+func parse(input string, options Options) (output string) {
+	if options.Delim == "" {
 		return input
 	}
-	options["delim"] = delim
 
-	parser := NewParser(input, options)
+	parser := NewParser(input, &options)
 	parser.Parse(&output)
 
 	return
