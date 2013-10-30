@@ -4,6 +4,14 @@ Format delimited data into columns. Similar to the unix shell program [`column`]
 
 ## Usage
 
+Download and compile the source with `go get github.com/st3redstripe/golumn`. Then import as usual.
+
+```go
+import (
+	"github.com/st3redstripe/golumn"
+)
+```
+
 Call `Parse` passing in an input string and a delimiter.
 
 ```go
