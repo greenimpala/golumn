@@ -33,3 +33,24 @@ For use with `ParseF` - where `options` is a `golumn.Options` struct containing 
 * `ColumnWidth int` - Sets colums to be a fixed width.
 * `MaxColumnWidth int` - Constrains column widths. Overidden if a valid `ColumnWidth` option is given.
 * `Truncate bool` - Truncates any cells that overflow the `ColumnWidth` or `MaxColumnWidth`.
+
+## Example
+
+```
+Date,Type,Description,Amount
+30/10/2013,DEB,SUPERMARKET 29833,5.15
+29/10/2013,DEB,AMAZON MKPLACE,5.63
+```
+
+```go
+var result = golumn.parse(file, ",", golumn.Options{
+	MaxColumnWidth: 5,
+	Truncate:       true,
+})
+```
+
+```
+Date 	Type	Descr	Amoun
+ 30/1	DEB 	SUPER	5.15 
+ 29/1	DEB 	AMAZO	5.63 
+```
