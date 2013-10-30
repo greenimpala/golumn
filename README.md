@@ -24,8 +24,10 @@ Use `ParseF` to override default options.
 func ParseF(input string, delim string, options map[string]string) string
 ```
 
-Where options is a combination of the following:
+## Options
 
-* `columnSpacer` - The characters used to pad columns, default is `\t`.
+For use with `ParseF`.
+
+* `columnSpacer` - The characters used to pad columns, default is tab `\t`.
 * `newLine` - New line character, default is `\n`.
 * `columnWidth` - Sets colums to be a fixed width.
