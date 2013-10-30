@@ -70,3 +70,12 @@ func (s *MySuite) TestParseFCanFormatForCustomColumnWidthMulti(c *C) {
 
 	c.Check(golumn.ParseF(input, ",", options), Equals, "aa\tbb\tcc\na \tb \tc \nzz\txx\tyy\n  \txx\t  ")
 }
+
+func (s *MySuite) TestParseFCanFormatForMaxWidth(c *C) {
+	input := "aa,bbbb,cccc"
+	options := golumn.Options{
+		MaxColumnWidth: 2,
+	}
+
+	c.Check(golumn.ParseF(input, ",", options), Equals, "aa\tbb\tcc\n  \tbb\tcc")
+}
