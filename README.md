@@ -51,8 +51,8 @@ func ParseF(input string, delim string, options Options) string
 
 For use with `ParseF` - where `options` is a `golumn.Options` struct containing a subset of the following
 
-* `ColumnSpacer string` - The characters used to pad columns, default is `\t`.
-* `NewLine string` - New line character, default is `\n`.
-* `ColumnWidth int` - Sets colums to be a fixed width.
-* `MaxColumnWidth int` - Constrains column widths. Overidden if a valid `ColumnWidth` option is given.
-* `Truncate bool` - Truncates any cells that overflow the `ColumnWidth` or `MaxColumnWidth`.
+* `ColumnSpacer` `string` - The characters used to pad columns, default is `\t`.
+* `NewLine` `string` - New line character, default is `\n`.
+* `ColumnWidth` `int` - Sets colums to be a fixed width.
+* `MaxColumnWidth` `int` - Constrains column widths. Overidden if a valid `ColumnWidth` option is given.
+* `Truncate` `bool` - Truncates any cells that overflow the `ColumnWidth` or `MaxColumnWidth`.
