@@ -36,19 +36,20 @@ For use with `ParseF` - where `options` is a `golumn.Options` struct containing 
 
 ## Example
 
+Some CSV file:
 ```
 Date,Type,Description,Amount
 30/10/2013,DEB,SUPERMARKET 29833,5.15
 29/10/2013,DEB,AMAZON MKPLACE,5.63
 ```
-
+Read file and parse it:
 ```go
-var result = golumn.parse(file, ",", golumn.Options{
+var result = golumn.parse(string(data), ",", golumn.Options{
 	MaxColumnWidth: 5,
 	Truncate:       true,
 })
 ```
-
+`result` now contains:
 ```
 Date 	Type	Descr	Amoun
  30/1	DEB 	SUPER	5.15 
