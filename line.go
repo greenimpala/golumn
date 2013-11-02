@@ -33,17 +33,18 @@ func (l *Line) Join(padSizes map[int]int, delim string, truncate bool) (output s
 	// the chunks buffer as will fit in the column
 	for i := 0; i < int(lines); i++ {
 		for columnIndex, chunk := range chunksBuffer {
-			// Pad chunk
-			for len(chunk) < padSizes[columnIndex] {
-				chunk += " "
-			}
+			padSize := padSizes[columnIndex]
+			chunk = padChunk(chunk, padSize)
 
 			if truncate {
-				chunk = chunk[:padSizes[columnIndex]]
+				// Chop chunk
+				chunk = chunk[:padSize]
 			}
 
-			output += chunk[:padSizes[columnIndex]]
-			chunksBuffer[columnIndex] = chunk[padSizes[columnIndex]:]
+			// Take as much as we should from the chunk
+			// and remove it from the buffer
+			output += chunk[:padSize]
+			chunksBuffer[columnIndex] = chunk[padSize:]
 
 			if columnIndex < len(chunksBuffer)-1 {
 				output += delim
@@ -54,4 +55,12 @@ func (l *Line) Join(padSizes map[int]int, delim string, truncate bool) (output s
 		}
 	}
 	return
+}
+
+func padChunk(chunk string, padSize int) string {
+	// Pad chunk
+	for len(chunk) < padSize {
+		chunk += " "
+	}
+	return chunk
 }
