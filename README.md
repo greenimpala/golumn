@@ -1,6 +1,6 @@
 # golumn
 
-Format delimited data into columns. Similar to the unix shell program [`column`](http://linux.about.com/library/cmd/blcmdl1_column.htm).
+Format delimited data into columns. Similar to the unix shell program `column`.
 
 ## Example
 
