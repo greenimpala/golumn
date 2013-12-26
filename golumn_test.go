@@ -1,7 +1,7 @@
 package golumn_test
 
 import (
-	"golumn"
+	"github.com/st3redstripe/golumn"
 	. "launchpad.net/gocheck"
 	"testing"
 )
